@@ -1,5 +1,5 @@
 import sys
-from typing import Callable, Literal
+from typing import Callable, Literal, Type
 
 from loguru import logger
 
@@ -10,48 +10,35 @@ class Logger(metaclass=Singleton):
     """ 
     Logger tool responsible of writing all actions to logs. 
     Simply said - it is a layer between program and loguru created for holding one loguru.logger through all program. 
+
+    Usage:
+    from path.to.logger import Logger
+    Logger.debug("hello!")
     """
+
+    ## These variables will contain appropriate logging functions after class's initialization for convenient external usage ##
+    debug = None
+    info = None
+    warning = None
+    error = None
+    critical = None
+
+    # 'True' if instance has initialized before
+    init_flag = False
+
     def __init__(self, *args, **kwargs) -> None:
-        logger.add(*args, **kwargs)
+        self.logger = logger
+        if not Logger.init_flag: # call function below only once at first initialization to avoid TypeError (calling Logger without arguments)
+            self.logger.add(*args, **kwargs)
 
-    def get(self) -> logger:
-        return logger
-
-    @staticmethod
-    def debug() -> Callable:
-        return logger.debug
-
-    @staticmethod
-    def info() -> Callable:
-        return logger.info
-
-    @staticmethod
-    def warning() -> Callable:
-        return logger.warning
-
-    @staticmethod
-    def error() -> Callable:
-        return logger.error
-
-    @staticmethod
-    def critical() -> Callable:
-        return logger.info
-
-
-## Twin functions of Logger for external direct importing ##
-def debug() -> Callable:
-    return Logger.debug
-
-def info() -> Callable:
-    return Logger.info
-
-def warning() -> Callable:
-    return Logger.warning
-
-def error() -> Callable:
-    return Logger.error
-
-def critical() -> Callable:
-    return Logger.info
-
-
+        # initialize class function variables
+        Logger.debug = self.logger.debug
+        Logger.info = self.logger.info
+        Logger.warning = self.logger.warning
+        Logger.error = self.logger.error
+        Logger.critical = self.logger.critical
+    
+    @property
+    def logger(self):
+        return self.logger
+    
