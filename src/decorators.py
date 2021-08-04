@@ -1,4 +1,4 @@
-""" Program with various decorators. """
+""" Kit with various decorators. """
 import requests
 
 
