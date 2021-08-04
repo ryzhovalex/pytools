@@ -13,6 +13,7 @@ class Logger(metaclass=Singleton):
 
     Usage:
     from path.to.logger import Logger
+    Logger(*your_args, **your_kwargs)
     Logger.debug("hello!")
     """
 
@@ -27,18 +28,17 @@ class Logger(metaclass=Singleton):
     init_flag = False
 
     def __init__(self, *args, **kwargs) -> None:
-        self.logger = logger
+        self.native_logger = logger
         if not Logger.init_flag: # call function below only once at first initialization to avoid TypeError (calling Logger without arguments)
-            self.logger.add(*args, **kwargs)
+            self.log.add(*args, **kwargs)
 
         # initialize class function variables
-        Logger.debug = self.logger.debug
-        Logger.info = self.logger.info
-        Logger.warning = self.logger.warning
-        Logger.error = self.logger.error
-        Logger.critical = self.logger.critical
+        Logger.debug = self.native_logger.debug
+        Logger.info = self.native_logger.info
+        Logger.warning = self.native_logger.warning
+        Logger.error = self.native_logger.error
+        Logger.critical = self.native_logger.critical
     
-    @property
-    def logger(self):
-        return self.logger
+    def get_native_logger(self):
+        return self.native_logger
     
