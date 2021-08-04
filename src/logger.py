@@ -33,3 +33,20 @@ class Logger(metaclass=Singleton):
     @staticmethod
     def critical(message: str) -> None:
         logger.critical(message)
+
+
+## Twin functions to be accessed via import statements (to use without 'Logger' prefix) ##
+def debug(message: str) -> None:
+    Logger.debug(message)
+
+def info(message: str) -> None:
+    Logger.info(message)
+
+def warning(message: str) -> None:
+    Logger.warning(message)
+
+def error(message: str) -> None:
+    Logger.error(message)
+    
+def critical(message: str) -> None:
+    Logger.critical(message)
