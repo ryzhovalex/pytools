@@ -1,5 +1,5 @@
 import sys
-from typing import Literal
+from typing import Callable, Literal
 
 from loguru import logger
 
@@ -16,4 +16,42 @@ class Logger(metaclass=Singleton):
 
     def get(self) -> logger:
         return logger
+
+    @staticmethod
+    def debug() -> Callable:
+        return logger.debug
+
+    @staticmethod
+    def info() -> Callable:
+        return logger.info
+
+    @staticmethod
+    def warning() -> Callable:
+        return logger.warning
+
+    @staticmethod
+    def error() -> Callable:
+        return logger.error
+
+    @staticmethod
+    def critical() -> Callable:
+        return logger.info
+
+
+## Twin functions of Logger for external direct importing ##
+def debug() -> Callable:
+    return Logger.debug
+
+def info() -> Callable:
+    return Logger.info
+
+def warning() -> Callable:
+    return Logger.warning
+
+def error() -> Callable:
+    return Logger.error
+
+def critical() -> Callable:
+    return Logger.info
+
 
