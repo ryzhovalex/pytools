@@ -30,7 +30,7 @@ class Logger(metaclass=Singleton):
     def __init__(self, *args, **kwargs) -> None:
         self.native_logger = logger
         if not Logger.init_flag: # call function below only once at first initialization to avoid TypeError (calling Logger without arguments)
-            self.log.add(*args, **kwargs)
+            self.native_logger.add(*args, **kwargs)
 
         # initialize class function variables
         Logger.debug = self.native_logger.debug
