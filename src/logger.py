@@ -8,45 +8,12 @@ from .singleton import Singleton
 
 class Logger(metaclass=Singleton):
     """ 
-    Logger model responsible of writing all actions to logs. 
+    Logger tool responsible of writing all actions to logs. 
     Simply said - it is a layer between program and loguru created for holding one loguru.logger through all program. 
     """
     def __init__(self, *args, **kwargs) -> None:
         logger.add(*args, **kwargs)
 
-    @staticmethod
-    def debug(message: str) -> None:
-        logger.debug(message)
+    def get(self) -> logger:
+        return logger
 
-    @staticmethod
-    def info(message: str) -> None:
-        logger.info(message)
-
-    @staticmethod
-    def warning(message: str) -> None:
-        logger.warning(message)
-
-    @staticmethod
-    def error(message: str) -> None:
-        logger.error(message)
-        
-    @staticmethod
-    def critical(message: str) -> None:
-        logger.critical(message)
-
-
-## Twin functions to be accessed via import statements (to use without 'Logger' prefix) ##
-def debug(message: str) -> None:
-    Logger.debug(message)
-
-def info(message: str) -> None:
-    Logger.info(message)
-
-def warning(message: str) -> None:
-    Logger.warning(message)
-
-def error(message: str) -> None:
-    Logger.error(message)
-    
-def critical(message: str) -> None:
-    Logger.critical(message)
