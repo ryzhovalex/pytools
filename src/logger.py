@@ -29,7 +29,7 @@ class Logger(metaclass=Singleton):
 
     def __init__(self, *args, **kwargs) -> None:
         Logger.native_logger = logger
-        Logger.native_logger.add(*args, **kwargs)
+        Logger.create_logger(*args, **kwargs)
 
         # initialize class function variables
         Logger.debug = Logger.native_logger.debug
@@ -39,10 +39,15 @@ class Logger(metaclass=Singleton):
         Logger.critical = Logger.native_logger.critical
 
     @classmethod
+    def create_logger(cls, *args, **kwargs) -> None:
+        cls.native_logger.add(*args, **kwargs)
+
+    @classmethod
     def get_native_logger(cls):
         return cls.native_logger
 
     @classmethod
-    def catch(cls):
-        return cls.native_logger.catch
+    def catch(cls, func):
+        return cls.native_logger.catch(func)
+    
     
