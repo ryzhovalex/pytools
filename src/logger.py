@@ -39,8 +39,12 @@ class Logger(metaclass=Singleton):
         Logger.critical = Logger.native_logger.critical
 
     @classmethod
-    def create_logger(cls, *args, **kwargs) -> None:
-        cls.native_logger.add(*args, **kwargs)
+    def create_logger(cls, *args, **kwargs) -> int:
+        return cls.native_logger.add(*args, **kwargs)
+
+    @classmethod
+    def remove_logger(cls, id: int) -> None:
+        cls.native_logger.remove(id)
 
     @classmethod
     def get_native_logger(cls):
