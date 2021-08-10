@@ -1,16 +1,18 @@
 """ Kit with various decorators. """
 import requests
+from .logger import Logger as log
 
 
+@log.catch
 def catch_request_connection_error(function):
     def wrapper(*args, **kwargs):
         try:
-            print("INFO: Sending request...")
+            log.info("Sending request...")
             response = function(*args, **kwargs)
         except requests.exceptions.ConnectionError:
-            print(f"ERROR: Address not responding!")
+            log.warning(f"Post request address is not responding!")
         else:
-            print(f"INFO: ...request has been sent with {response=}!")
+            log.info(f"Request has been sent with {response=}!")
         finally:
             return response
     return wrapper
