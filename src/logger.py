@@ -18,7 +18,7 @@ class Logger(metaclass=Singleton):
     """
 
     # loguru.logger itself
-    native_logger = None
+    native_logger = logger
 
     ## These variables will contain appropriate logging functions after class's initialization for convenient external usage ##
     debug = None
@@ -28,7 +28,6 @@ class Logger(metaclass=Singleton):
     critical = None
 
     def __init__(self, *args, **kwargs) -> None:
-        Logger.native_logger = logger
         Logger.create_logger(*args, **kwargs)
 
         # initialize class function variables
